@@ -102,14 +102,25 @@
         .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
         .bank-details { padding: 2rem; border-radius: 20px; border-left: 4px solid var(--accent); background: var(--primary-light); }
 
-        .form-group input, .form-group select { 
+        .form-group input, .form-group select, .form-group textarea { 
             width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
             color: var(--white); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;
+            font-family: inherit;
         }
 
         .btn { padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; text-decoration: none; display: inline-block; transition: var(--transition); border: none; cursor: pointer; }
         .btn-primary { background: var(--accent); color: var(--white); }
         .btn-primary:hover { box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.02); }
+
+        /* --- SOCIAL ICONS --- */
+        .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .social-icon { 
+            width: 45px; height: 45px; border-radius: 50%; background: var(--glass); 
+            border: 1px solid var(--glass-border); display: flex; align-items: center; 
+            justify-content: center; color: var(--white); transition: var(--transition);
+            text-decoration: none;
+        }
+        .social-icon:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
 
         /* --- MOBILE --- */
         @media (max-width: 992px) {
@@ -255,6 +266,46 @@
         </div>
     </section>
 
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="payment-grid">
+                <div class="reveal">
+                    <span class="text-gradient" style="font-weight: 700; text-transform: uppercase;">Get In Touch</span>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0;">Contact Us</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Have questions? Reach out to our support team or follow our social channels for updates.</p>
+                    
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-envelope" style="color: var(--accent);"></i>
+                            <span>support@dmathsacademy.com</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <i class="fas fa-phone" style="color: var(--accent);"></i>
+                            <span>+234 702 567 4894</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-icon" data-platform="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" data-platform="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon" data-platform="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" data-platform="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <form id="contactForm" class="card reveal">
+                    <div class="form-group"><input type="text" name="name" placeholder="Your Name" required></div>
+                    <div class="form-group"><input type="email" name="email" placeholder="Email Address" required></div>
+                    <div class="form-group">
+                        <textarea name="message" rows="4" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    <p id="contactStatus" style="margin-top: 1rem; text-align: center; font-size: 0.9rem;"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <footer style="padding: 4rem 0; border-top: 1px solid var(--glass-border); text-align: center;">
         <p style="color: var(--text-muted);">&copy; 2026 D-Maths Academy. Asaba, Delta State.</p>
     </footer>
@@ -278,30 +329,52 @@
             });
             btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-            // Form Logic (Placeholder for your Apps Script URL)
+            // Form Logic
             const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; 
-            const form = document.getElementById('googleSheetForm');
-            const status = document.getElementById('formStatus');
+            
+            // Handles both Enrollment and Contact forms
+            const handleFormSubmit = (formId, statusId, type) => {
+                const form = document.getElementById(formId);
+                const status = document.getElementById(statusId);
 
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                status.innerText = "Processing secure verification...";
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
+                form.addEventListener('submit', e => {
+                    e.preventDefault();
+                    status.innerText = "Sending securely...";
+                    status.style.color = "var(--accent)";
+                    
+                    const formData = new FormData(form);
+                    const data = Object.fromEntries(formData.entries());
+                    data.formType = type; // To distinguish in Google Sheets
 
-                fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(data)
-                })
-                .then(() => {
-                    status.innerText = "Success! Verification logged. Check email soon.";
-                    status.style.color = "#4ade80";
-                    form.reset();
-                })
-                .catch(() => {
-                    status.innerText = "Verification error. Please try again.";
-                    status.style.color = "#ef4444";
+                    fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(data)
+                    })
+                    .then(() => {
+                        status.innerText = "Sent successfully! We will respond shortly.";
+                        status.style.color = "#4ade80";
+                        form.reset();
+                    })
+                    .catch(() => {
+                        status.innerText = "Error sending. Please try again.";
+                        status.style.color = "#ef4444";
+                    });
+                });
+            };
+
+            handleFormSubmit('googleSheetForm', 'formStatus', 'Enrollment');
+            handleFormSubmit('contactForm', 'contactStatus', 'Inquiry');
+
+            // Log Social Media Clicks to Google Script (Optional Analytics)
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify({ type: 'SocialClick', platform: platform })
+                    });
                 });
             });
         });
