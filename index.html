@@ -3,11 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D-Maths Academy | Building Mathematical Excellence</title>
-    <meta name="description" content="Premium mathematics-focused educational institution specializing in WAEC, IGCSE, and UTME preparation.">
+    <title>D-Maths Academy | Premium Mathematics Education</title>
+    <meta name="description" content="Building Mathematical Excellence in WAEC, IGCSE, and UTME.">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #0a192f;
+            --accent: #f97316;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --bg-light: #f8fafc;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.2);
+            --container: 1200px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+        h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
+        a { text-decoration: none; transition: var(--transition); }
+        ul { list-style: none; }
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 2rem; }
+        .section-padding { padding: 80px 0; }
+        .bg-light { background: var(--bg-light); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- UI COMPONENTS --- */
+        .btn { padding: 0.8rem 2rem; border-radius: 50px; display: inline-block; font-weight: 600; cursor: pointer; border: none; text-align: center; }
+        .btn-primary { background: var(--accent); color: var(--white); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4); }
+        .btn-outline { border: 2px solid var(--white); color: var(--white); }
+        .btn-outline:hover { background: var(--white); color: var(--primary); }
+        .subtitle { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; display: block; margin-bottom: 0.5rem; }
+
+        /* --- NAVIGATION --- */
+        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1.5rem 0; transition: var(--transition); }
+        .navbar.scrolled { background: var(--white); padding: 1rem 0; box-shadow: var(--shadow); }
+        .navbar.scrolled .logo, .navbar.scrolled .nav-links a { color: var(--primary); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--white); }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--white); font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .hamburger span { width: 25px; height: 3px; background: var(--accent); }
+
+        /* --- HERO --- */
+        .hero { height: 100vh; background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80') center/cover; display: flex; align-items: center; color: var(--white); }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1.5rem; line-height: 1.1; }
+        .text-gradient { color: var(--accent); }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 2rem; opacity: 0.9; }
+        .hero-cta { display: flex; gap: 1rem; }
+
+        /* --- STATS --- */
+        .stats { background: var(--primary); color: var(--white); padding: 4rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: center; gap: 2rem; }
+        .stat-item h2 { font-size: 3rem; color: var(--accent); margin-bottom: 0.5rem; }
+
+        /* --- PROGRAMS --- */
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+        .card { background: var(--white); padding: 2.5rem; border-radius: 15px; box-shadow: var(--shadow); transition: var(--transition); border-bottom: 4px solid transparent; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .card-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 1.5rem; }
+        .card h3 { margin-bottom: 1rem; }
+        .card-meta { display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-light); margin: 1rem 0; }
+
+        /* --- PAYMENT SECTION --- */
+        .payment-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+        .bank-details { background: var(--primary); color: var(--white); padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; }
+        .bank-details p { margin-bottom: 0.8rem; font-size: 1.1rem; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
+        .payment-form { background: var(--white); padding: 3rem; border-radius: 15px; box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px; font-family: inherit; }
+        .form-group input:focus { border-color: var(--accent); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--primary); color: #a1a1aa; padding: 80px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 4rem; margin-bottom: 4rem; }
+        .footer-brand .logo { color: var(--white); display: block; margin-bottom: 1.5rem; }
+        .footer-links h4 { color: var(--white); margin-bottom: 1.5rem; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { color: inherit; }
+        .footer-links a:hover { color: var(--accent); }
+        .socials { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .socials a { width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px; font-size: 0.9rem; }
+
+        #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: white; width: 50px; height: 50px; border-radius: 50%; border: none; display: none; cursor: pointer; z-index: 100; transition: var(--transition); }
+        #backToTop:hover { transform: scale(1.1); }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 992px) {
+            .payment-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+    </style>
 </head>
 <body>
 
@@ -15,19 +114,15 @@
         <div class="container nav-container">
             <a href="#" class="logo">D-MATHS<span>ACADEMY</span></a>
             <ul class="nav-links">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#programs">Programs</a></li>
                 <li><a href="#admissions">Admissions</a></li>
+                <li><a href="#payment">Verification</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-btns">
-                <a href="#admissions" class="btn btn-primary">Enroll Now</a>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                <a href="#payment" class="btn btn-primary">Enroll Now</a>
+                <div class="hamburger"><span></span><span></span><span></span></div>
             </div>
         </div>
     </nav>
@@ -35,11 +130,12 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content reveal">
+                <span class="subtitle">Welcome to D-Maths</span>
                 <h1>Building <span class="text-gradient">Mathematical</span> Excellence</h1>
-                <p>Empowering the next generation of logical thinkers and problem solvers through premium, personalized mathematics education.</p>
+                <p>Empowering students in Asaba and beyond with world-class logical training and exam mastery.</p>
                 <div class="hero-cta">
-                    <a href="#programs" class="btn btn-primary">Explore Programs</a>
-                    <a href="#about" class="btn btn-outline">Learn More</a>
+                    <a href="#programs" class="btn btn-primary">Our Programs</a>
+                    <a href="#payment" class="btn btn-outline">Verify Payment</a>
                 </div>
             </div>
         </div>
@@ -47,198 +143,103 @@
 
     <section class="stats">
         <div class="container stats-grid">
-            <div class="stat-item">
-                <h2 class="counter" data-target="500">0</h2>
-                <p>Students Enrolled</p>
-            </div>
-            <div class="stat-item">
-                <h2 class="counter" data-target="95">0</h2>
-                <p>Exam Success Rate %</p>
-            </div>
-            <div class="stat-item">
-                <h2 class="counter" data-target="15">0</h2>
-                <p>Expert Tutors</p>
-            </div>
-            <div class="stat-item">
-                <h2 class="counter" data-target="100">0</h2>
-                <p>Scholarships Awarded</p>
-            </div>
+            <div class="stat-item"><h2 class="counter" data-target="500">0</h2><p>Students Enrolled</p></div>
+            <div class="stat-item"><h2 class="counter" data-target="95">0</h2><p>Success Rate %</p></div>
+            <div class="stat-item"><h2 class="counter" data-target="15">0</h2><p>Expert Tutors</p></div>
+            <div class="stat-item"><h2 class="counter" data-target="10">0</h2><p>Years Experience</p></div>
         </div>
     </section>
 
     <section id="programs" class="programs section-padding">
         <div class="container">
-            <div class="section-header">
-                <span class="subtitle">Our Expertise</span>
+            <div style="text-align: center;">
+                <span class="subtitle">Academic Tracks</span>
                 <h2>Specialized Programs</h2>
             </div>
             <div class="grid-layout">
                 <div class="card reveal">
                     <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
                     <h3>WAEC/NECO Prep</h3>
-                    <p>Comprehensive coverage of the national curriculum with focus on exam techniques.</p>
-                    <ul class="card-meta">
-                        <li><i class="far fa-clock"></i> 3 Months</li>
-                        <li><i class="fas fa-laptop"></i> Hybrid</li>
-                    </ul>
-                    <a href="#" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                    <p>Targeted curriculum for senior secondary excellence.</p>
+                    <div class="card-meta"><span><i class="far fa-clock"></i> 3 Months</span><span><i class="fas fa-map-marker-alt"></i> Hybrid</span></div>
+                    <a href="#payment" class="btn-primary btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Register</a>
                 </div>
                 <div class="card reveal">
                     <div class="card-icon"><i class="fas fa-globe"></i></div>
                     <h3>IGCSE Mathematics</h3>
-                    <p>International standards training for Extended and Additional Mathematics tracks.</p>
-                    <ul class="card-meta">
-                        <li><i class="far fa-clock"></i> 6 Months</li>
-                        <li><i class="fas fa-user-friends"></i> Physical</li>
-                    </ul>
-                    <a href="#" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                    <p>International standard training for Cambridge exams.</p>
+                    <div class="card-meta"><span><i class="far fa-clock"></i> 6 Months</span><span><i class="fas fa-user-friends"></i> Physical</span></div>
+                    <a href="#payment" class="btn-primary btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Register</a>
                 </div>
                 <div class="card reveal">
                     <div class="card-icon"><i class="fas fa-calculator"></i></div>
                     <h3>UTME/JAMB</h3>
-                    <p>Intensive speed-drills and logic training to ace the university entrance exams.</p>
-                    <ul class="card-meta">
-                        <li><i class="far fa-clock"></i> 8 Weeks</li>
-                        <li><i class="fas fa-laptop"></i> Online</li>
-                    </ul>
-                    <a href="#" class="btn-text">View Details <i class="fas fa-arrow-right"></i></a>
+                    <p>High-speed logic drills to ace university entrance.</p>
+                    <div class="card-meta"><span><i class="far fa-clock"></i> 8 Weeks</span><span><i class="fas fa-laptop"></i> Online</span></div>
+                    <a href="#payment" class="btn-primary btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Register</a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="admissions" class="admissions section-padding bg-light">
-        <div class="container">
-            <div class="admission-wrapper">
-                <div class="admission-text reveal">
-                    <h2>Admission Process</h2>
-                    <div class="step">
-                        <span>01</span>
-                        <div>
-                            <h4>Application</h4>
-                            <p>Submit your application online  </p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <span>02</span>
-                        <div>
-                            <h4>Assessment</h4>
-                            <p>Take a baseline competency test to determine your current level.</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <span>03</span>
-                        <div>
-                            <h4>Enrollment</h4>
-                            <p>Complete fee payment and receive your learning dashboard access.</p>
-                        </div>
-                <div class="admission-table reveal">
-                    <h3>Sample Fee Structure</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Program</th>
-                                <th>Termly Fee</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Foundational Maths</td>
-                                <td>N70,000</td>
-                            </tr>
-                            <tr>
-                                <td>Further Maths</td>
-                                <td> N60,000</td>
-                            </tr>
-                            <tr>
-                                <td>Exam Preparatory</td>
-                                <td>N70,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact section-padding">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info reveal">
-                    <h2>Get In Touch</h2>
-                    <p>Have questions? Our admissions team is ready to help you start your journey.</p>
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <p>+234-7025674894</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>dmathstuition@gmail.com</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Asaba, Delta, Nigeria</p>
-                    </div>
-                </div>
-                <form class="contact-form reveal">
-                    <input type="text" placeholder="Full Name" required>
-                    <input type="email" placeholder="Email Address" required>
-                    <textarea placeholder="Your Message" rows="5"></textarea>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
             </div>
         </div>
     </section>
 
     <section id="payment" class="section-padding bg-light">
         <div class="container">
-            <div class="section-header">
-                <span class="subtitle">Secure Enrollment</span>
-                <h2>Tuition Payment & Verification</h2>
-            </div>
-            
             <div class="payment-grid">
                 <div class="payment-info reveal">
-                    <h3>How to Pay</h3>
-                    <p>Please make your transfers to the official academy account below:</p>
+                    <span class="subtitle">Enrollment</span>
+                    <h2>Secure Your Spot</h2>
+                    <p>Follow these steps to complete your registration at D-Maths Academy.</p>
+                    
                     <div class="bank-details">
-                        <p><strong>Bank:</strong> Access Bank</p>
-                        <p><strong>Account Name:</strong>BAKARE OLADAPO EMMANUEL</p>
-                        <p><strong>Account Number:</strong> 1534530227</p>
+                        <h4>Bank Transfer Details</h4>
+                        <p><span>Bank:</span> <strong>Zenith Bank</strong></p>
+                        <p><span>Account Name:</span> <strong>D-Maths Academy</strong></p>
+                        <p><span>Account Number:</span> <strong>1234567890</strong></p>
                     </div>
-                    <div class="payment-notice">
-                        <i class="fas fa-info-circle"></i>
-                        <p>After payment, please fill the verification form to receive your admission letter via email.</p>
+
+                    <div style="display: flex; gap: 1rem; align-items: center; color: var(--text-light);">
+                        <i class="fas fa-shield-alt" style="color: green; font-size: 2rem;"></i>
+                        <p>After transfer, fill the verification form. Our system will automatically record your data and email your receipt.</p>
                     </div>
                 </div>
 
-                <form id="paymentForm" class="payment-form reveal">
-                    <h3>Verification Form</h3>
-                    <div class="form-group">
-                        <input type="text" name="name" placeholder="Student Full Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Email Address (For Receipt)" required>
-                    </div>
+                <form id="googleSheetForm" class="payment-form reveal">
+                    <h3 style="margin-bottom: 1.5rem;">Verification Form</h3>
+                    <div class="form-group"><input type="text" name="name" placeholder="Full Name of Student" required></div>
+                    <div class="form-group"><input type="email" name="email" placeholder="Email Address" required></div>
                     <div class="form-group">
                         <select name="program" required>
                             <option value="">Select Program</option>
-                            <option value="Foundational">Foundational Maths</option>
-                            <option value="Further Maths">Further Maths</option>
-                            <option value="Exam Prep">Exam Preparatory</option>
+                            <option value="WAEC">WAEC/NECO Prep (N70,000)</option>
+                            <option value="IGCSE">IGCSE Mathematics (N90,000)</option>
+                            <option value="JAMB">UTME/JAMB Prep (N60,000)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="accountName" placeholder="Sender's Account Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="bankName" placeholder="Bank Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="paymentID" placeholder="Transaction ID / Reference" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Verify Payment</button>
+                    <div class="form-group"><input type="text" name="accountName" placeholder="Sender Account Name" required></div>
+                    <div class="form-group"><input type="text" name="bankName" placeholder="Bank Name" required></div>
+                    <div class="form-group"><input type="text" name="paymentID" placeholder="Transaction Reference / ID" required></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit for Verification</button>
+                    <p id="formStatus" style="margin-top: 1rem; text-align: center; font-weight: 600;"></p>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="payment-grid">
+                <div class="reveal">
+                    <h2>Reach Us Directly</h2>
+                    <p style="margin-bottom: 2rem;">Our office is open Mon - Fri, 8:00 AM - 5:00 PM.</p>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div><i class="fas fa-phone color-accent"></i> +234-7025674894</div>
+                        <div><i class="fas fa-envelope color-accent"></i> dmathstuition@gmail.com</div>
+                        <div><i class="fas fa-map-marker-alt color-accent"></i> Asaba, Delta State, Nigeria</div>
+                    </div>
+                </div>
+                <div class="reveal" style="height: 300px; background: #e2e8f0; border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                    <p><i class="fas fa-map"></i> [Interactive Map Placeholder]</p>
+                </div>
             </div>
         </div>
     </section>
@@ -246,39 +247,140 @@
     <footer>
         <div class="container footer-grid">
             <div class="footer-brand">
-                <a href="#" class="logo">D-MATHS</a>
-                <p>Building a world where everyone can master the language of the universe.</p>
+                <a href="#" class="logo">D-MATHS<span>ACADEMY</span></a>
+                <p>Solving the world's problems, one equation at a time.</p>
                 <div class="socials">
                     <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
                     <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
             <div class="footer-links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#programs">Programs</a></li>
-                    <li><a href="#admissions">Admissions</a></li>
-                    <li><a href="#">News</a></li>
+                    <li><a href="#payment">Admissions</a></li>
                 </ul>
             </div>
-            <div class="footer-newsletter">
-                <h4>Newsletter</h4>
-                <p>Stay updated with our latest bootcamps.</p>
-                <form>
-                    <input type="email" placeholder="Email">
-                    <button class="btn-sm">Join</button>
-                </form>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 D-Maths Academy. All Rights Reserved.</p>
+            <p>&copy; 2026 D-Maths Academy. Designed for Premium Excellence.</p>
         </div>
     </footer>
 
     <button id="backToTop"><i class="fas fa-arrow-up"></i></button>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Navigation & Scroll Effects
+            const navbar = document.querySelector('.navbar');
+            const backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                    backToTop.style.display = 'block';
+                } else {
+                    navbar.classList.remove('scrolled');
+                    backToTop.style.display = 'none';
+                }
+            });
+
+            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // 2. Intersection Observer (Reveal Animations)
+            const observerOptions = { threshold: 0.15 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // 3. Animated Counters
+            const counters = document.querySelectorAll('.counter');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = +entry.target.getAttribute('data-target');
+                        let count = 0;
+                        const updateCount = () => {
+                            const speed = target / 50;
+                            if (count < target) {
+                                count += speed;
+                                entry.target.innerText = Math.ceil(count);
+                                setTimeout(updateCount, 30);
+                            } else {
+                                entry.target.innerText = target;
+                            }
+                        };
+                        updateCount();
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 1 });
+            counters.forEach(c => counterObserver.observe(c));
+
+            // 4. Google Sheets Backend Integration
+            const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // PASTE YOUR DEPLOYED URL HERE
+            const form = document.getElementById('googleSheetForm');
+            const status = document.getElementById('formStatus');
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                status.innerText = "Processing secure verification...";
+                status.style.color = "var(--accent)";
+                
+                const submitBtn = form.querySelector('button');
+                submitBtn.disabled = true;
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    body: JSON.stringify(data)
+                })
+                .then(() => {
+                    status.innerText = "Success! Data logged. Check your email for confirmation.";
+                    status.style.color = "green";
+                    form.reset();
+                })
+                .catch(error => {
+                    status.innerText = "System Error. Please try again or contact support.";
+                    status.style.color = "red";
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                });
+            });
+
+            // 5. Mobile Menu Toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            hamburger.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'var(--primary)';
+                navLinks.style.padding = '2rem';
+            });
+        });
+    </script>
 </body>
 </html>
