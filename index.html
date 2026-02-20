@@ -37,213 +37,186 @@
             overflow-x: hidden; 
         }
         
-        /* Smooth Entrance Animations */
-        .reveal { opacity: 0; transform: translateY(40px); transition: var(--transition); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .container { max-width: var(--container); margin: 0 auto; padding: 0 1.5rem; }
-        .section-padding { padding: 120px 0; }
+        .section-padding { padding: 100px 0; }
         
-        /* --- NAVIGATION (GLASSMORPHISM) --- */
+        /* --- BUTTON-STYLE NAVIGATION --- */
         .navbar { 
-            position: fixed; top: 0; width: 100%; z-index: 1000; 
-            padding: 1.5rem 0; transition: var(--transition); 
-            border-bottom: 1px solid transparent;
+            position: fixed; top: 20px; width: 100%; z-index: 1000; 
+            transition: var(--transition); 
         }
-        .navbar.scrolled { 
-            background: rgba(5, 12, 26, 0.85); 
-            backdrop-filter: blur(15px); 
-            padding: 1rem 0; 
-            border-bottom: 1px solid var(--glass-border);
+        .nav-inner {
+            background: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(15px);
+            padding: 0.8rem 2rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--shadow);
         }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--white); letter-spacing: -1px; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--white); text-decoration: none; }
         .logo span { color: var(--accent); }
         
-        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
         .nav-links a { 
-            color: var(--text-muted); font-weight: 500; font-size: 0.95rem; 
-            position: relative; transition: var(--transition);
+            color: var(--text-muted); font-weight: 600; font-size: 0.85rem; 
+            text-decoration: none; transition: var(--transition);
+            padding: 0.5rem 1rem; border-radius: 50px;
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--white); }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; 
-            height: 2px; background: var(--accent); transition: var(--transition);
-        }
-        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--white); background: var(--glass); }
 
-        /* --- TOGGLE BAR DESIGN --- */
-        .hamburger { 
-            display: none; cursor: pointer; padding: 10px; border-radius: 8px;
-            background: var(--glass); border: 1px solid var(--glass-border);
-        }
-        .hamburger span { 
-            display: block; width: 22px; height: 2px; background: var(--white); 
-            margin: 5px 0; transition: 0.3s; transform-origin: center;
-        }
-        .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        /* --- HERO SECTION (HIGH-END) --- */
+        /* --- HERO SECTION --- */
         .hero { 
-            height: 100vh; position: relative; overflow: hidden;
-            display: flex; align-items: center; background: var(--primary);
+            min-height: 100vh; position: relative; overflow: hidden;
+            display: flex; align-items: center; padding-top: 80px;
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.15), transparent 40%),
-                        radial-gradient(circle at 10% 80%, rgba(30, 64, 175, 0.2), transparent 40%);
-            z-index: 1;
+            background: radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.1), transparent 40%);
+            z-index: -1;
         }
-        .hero-content { position: relative; z-index: 2; max-width: 800px; }
-        .subtitle { 
-            color: var(--accent); font-weight: 700; text-transform: uppercase; 
-            letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 1rem; display: block;
+        .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem; color: var(--white); }
+        .text-gradient { background: linear-gradient(to right, #f97316, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- ADMISSIONS STEPS --- */
+        .admission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .step-card {
+            background: var(--glass); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--glass-border);
+            position: relative; overflow: hidden;
         }
-        .hero h1 { 
-            font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1; margin-bottom: 2rem; 
-            font-weight: 900; letter-spacing: -2px; color: var(--white);
-        }
-        .text-gradient { 
-            background: linear-gradient(to right, #f97316, #fb923c); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+        .step-number {
+            position: absolute; top: -10px; right: -10px; font-size: 6rem; 
+            font-weight: 900; color: rgba(255,255,255,0.03); line-height: 1;
         }
 
-        /* --- STATS CARDS --- */
-        .stats { background: #070f1d; border-top: 1px solid var(--glass-border); padding: 5rem 0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
-        .stat-item { text-align: center; }
-        .stat-item h2 { font-size: 3.5rem; color: var(--white); margin-bottom: 0.5rem; font-weight: 800; }
-
-        /* --- MODERN CARDS --- */
+        /* --- CARDS & FORMS --- */
         .card { 
             background: var(--glass); border: 1px solid var(--glass-border); 
-            padding: 3rem; border-radius: 24px; transition: var(--transition);
-            backdrop-filter: blur(10px);
+            padding: 2.5rem; border-radius: 24px; transition: var(--transition);
         }
-        .card:hover { 
-            background: rgba(255,255,255,0.06); transform: translateY(-12px); 
-            border-color: var(--accent); box-shadow: var(--shadow);
-        }
-        .card-icon { 
-            width: 60px; height: 60px; background: var(--accent-glow); 
-            border-radius: 16px; display: flex; align-items: center; 
-            justify-content: center; color: var(--accent); font-size: 1.5rem; margin-bottom: 2rem;
-        }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        
+        .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .bank-details { padding: 2rem; border-radius: 20px; border-left: 4px solid var(--accent); background: var(--primary-light); }
 
-        /* --- PREMIUM FORMS --- */
-        .payment-form { 
-            background: var(--glass); border: 1px solid var(--glass-border);
-            backdrop-filter: blur(20px); padding: 3.5rem; border-radius: 30px;
-        }
         .form-group input, .form-group select { 
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
-            color: var(--white); padding: 1.1rem; border-radius: 12px; transition: 0.3s;
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
+            color: var(--white); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;
         }
-        .form-group input:focus { border-color: var(--accent); background: rgba(255,255,255,0.08); }
 
-        .btn { 
-            padding: 1rem 2.5rem; border-radius: 14px; font-weight: 700; 
-            transition: var(--transition); border: none; cursor: pointer;
-        }
-        .btn-primary { 
-            background: var(--accent); color: var(--white); 
-            box-shadow: 0 10px 20px var(--accent-glow);
-        }
-        .btn-primary:hover { transform: scale(1.05); background: #fb923c; }
+        .btn { padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; text-decoration: none; display: inline-block; transition: var(--transition); border: none; cursor: pointer; }
+        .btn-primary { background: var(--accent); color: var(--white); }
+        .btn-primary:hover { box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.02); }
 
-        /* --- MOBILE MENU OVERLAY --- */
+        /* --- MOBILE --- */
         @media (max-width: 992px) {
-            .nav-links { 
-                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
-                background: var(--primary); flex-direction: column; justify-content: center;
-                transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1); z-index: 999;
-                border-left: 1px solid var(--glass-border);
-            }
-            .nav-links.active { right: 0; }
-            .hamburger { display: block; position: relative; z-index: 1000; }
+            .navbar { top: 10px; }
+            .nav-inner { border-radius: 20px; padding: 0.8rem 1.2rem; }
+            .nav-links { display: none; }
             .payment-grid { grid-template-columns: 1fr; }
         }
 
-        /* --- BACKGROUND FLOATING ELEMENTS --- */
-        .blob {
-            position: absolute; width: 400px; height: 400px; background: var(--accent);
-            filter: blur(150px); opacity: 0.1; border-radius: 50%; z-index: 0; animation: float 10s infinite alternate;
+        #backToTop {
+            position: fixed; bottom: 30px; right: 30px; background: var(--accent);
+            color: white; border: none; width: 50px; height: 50px; border-radius: 50%;
+            cursor: pointer; display: none; z-index: 100;
         }
-        @keyframes float { from { transform: translate(0,0); } to { transform: translate(100px, 50px); } }
     </style>
 </head>
 <body>
 
-    <div class="hero-bg"></div>
-    <div class="blob" style="top: 10%; right: -5%;"></div>
-    <div class="blob" style="bottom: 20%; left: -10%; background: #1e40af;"></div>
-
     <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">D-MATHS<span>ACADEMY</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#programs">Programs</a></li>
-                <li><a href="#admissions">Admissions</a></li>
-                <li><a href="#payment">Verification</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#payment" class="btn btn-primary" style="padding: 0.8rem 1.5rem;">Join Academy</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
+        <div class="container">
+            <div class="nav-inner">
+                <a href="#" class="logo">D-MATHS<span>ACADEMY</span></a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#admissions">Admissions</a></li>
+                    <li><a href="#payment">Verification</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#payment" class="btn btn-primary">Join Now</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger" style="color: white; display: none;">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
     </nav>
 
     <section id="home" class="hero">
+        <div class="hero-bg"></div>
         <div class="container">
-            <div class="hero-content reveal">
-                <span class="subtitle">Premium Education Hub</span>
-                <h1>Mastering the <span class="text-gradient">Language</span> of the Universe</h1>
-                <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 3rem;">We don't just teach formulas; we build logical architects. Join Asaba's most elite mathematical training ground.</p>
+            <div class="reveal">
+                <span style="color: var(--accent); font-weight: 700; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase;">Premium Education Hub</span>
+                <h1>Mastering the <span class="text-gradient">Language</span> <br>of the Universe</h1>
+                <p style="color: var(--text-muted); max-width: 600px; font-size: 1.1rem; margin-bottom: 2.5rem;">We don't just teach formulas; we build logical architects. Join Asaba's most elite mathematical training ground for global excellence.</p>
                 <div class="hero-cta">
                     <a href="#programs" class="btn btn-primary">Explore Programs</a>
-                    <a href="#payment" class="btn btn-outline" style="margin-left: 1rem; border: 1px solid var(--glass-border); background: var(--glass); backdrop-filter: blur(5px);">Quick Verification</a>
+                    <a href="#admissions" class="btn" style="color: white; margin-left: 1rem; border: 1px solid var(--glass-border);">Enrollment Guide</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="stats">
-        <div class="container stats-grid">
-            <div class="stat-item reveal"><h2 class="counter" data-target="500">0</h2><p style="color: var(--accent);">Active Students</p></div>
-            <div class="stat-item reveal"><h2 class="counter" data-target="98">0</h2><p style="color: var(--accent);">Exam Success Rate %</p></div>
-            <div class="stat-item reveal"><h2 class="counter" data-target="25">0</h2><p style="color: var(--accent);">Expert Mentors</p></div>
-            <div class="stat-item reveal"><h2 class="counter" data-target="12">0</h2><p style="color: var(--accent);">Years Legacy</p></div>
+    <section id="admissions" class="section-padding" style="background: #060e1d;">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <span class="text-gradient" style="font-weight: 700; text-transform: uppercase;">Join the Elite</span>
+                <h2 style="font-size: 2.5rem; font-family: 'Playfair Display';">Admission Process</h2>
+            </div>
+            
+            <div class="admission-grid">
+                <div class="step-card reveal">
+                    <div class="step-number">01</div>
+                    <h3 style="color: var(--accent); margin-bottom: 1rem;">Select Program</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Choose between WAEC, IGCSE, or JAMB tracks based on your academic goals.</p>
+                </div>
+                <div class="step-card reveal">
+                    <div class="step-number">02</div>
+                    <h3 style="color: var(--accent); margin-bottom: 1rem;">Make Payment</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Transfer the tuition fee to our corporate Zenith Bank account listed below.</p>
+                </div>
+                <div class="step-card reveal">
+                    <div class="step-number">03</div>
+                    <h3 style="color: var(--accent); margin-bottom: 1rem;">Verify Ref</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Fill the verification form with your transaction reference for instant logging.</p>
+                </div>
+                <div class="step-card reveal">
+                    <div class="step-number">04</div>
+                    <h3 style="color: var(--accent); margin-bottom: 1rem;">Orientation</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Receive your welcome pack and schedule via email within 24 hours.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="programs" class="section-padding">
         <div class="container">
             <div style="text-align: center; margin-bottom: 4rem;">
-                <span class="subtitle">World Class Tracks</span>
-                <h2 style="font-size: 3rem; font-family: 'Playfair Display';">Our Expertise</h2>
+                <h2 style="font-size: 2.5rem; font-family: 'Playfair Display';">Our Expertise</h2>
             </div>
-            <div class="grid-layout" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
                 <div class="card reveal">
-                    <div class="card-icon"><i class="fas fa-brain"></i></div>
+                    <i class="fas fa-brain" style="font-size: 2rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
                     <h3>WAEC/NECO Elite</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Intensive mastery of the national curriculum with secret exam-winning strategies.</p>
-                    <div class="card-meta" style="margin-top: 1.5rem; color: var(--accent);"><span><i class="far fa-clock"></i> 3 Months</span></div>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">Intensive mastery of the national curriculum with secret exam-winning strategies.</p>
+                    <span style="color: var(--accent); font-weight: 700;">N70,000 / Session</span>
                 </div>
                 <div class="card reveal">
-                    <div class="card-icon"><i class="fas fa-infinity"></i></div>
+                    <i class="fas fa-infinity" style="font-size: 2rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
                     <h3>IGCSE Global</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Cambridge-aligned logic training for students aiming for international standards.</p>
-                    <div class="card-meta" style="margin-top: 1.5rem; color: var(--accent);"><span><i class="far fa-clock"></i> 6 Months</span></div>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">Cambridge-aligned logic training for students aiming for international standards.</p>
+                    <span style="color: var(--accent); font-weight: 700;">N90,000 / Session</span>
                 </div>
                 <div class="card reveal">
-                    <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                    <i class="fas fa-bolt" style="font-size: 2rem; color: var(--accent); margin-bottom: 1.5rem;"></i>
                     <h3>JAMB Speed-Logic</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Eliminate time-pressure with our unique speed-solving algorithms for UTME.</p>
-                    <div class="card-meta" style="margin-top: 1.5rem; color: var(--accent);"><span><i class="far fa-clock"></i> 8 Weeks</span></div>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">Eliminate time-pressure with our unique speed-solving algorithms for UTME.</p>
+                    <span style="color: var(--accent); font-weight: 700;">N60,000 / Session</span>
                 </div>
             </div>
         </div>
@@ -252,136 +225,60 @@
     <section id="payment" class="section-padding" style="background: #040a16;">
         <div class="container">
             <div class="payment-grid">
-                <div class="payment-info reveal">
-                    <span class="subtitle">Enrollment Portal</span>
-                    <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Enrollment Verification</h2>
+                <div class="reveal">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Enrollment Verification</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Secure your spot by completing the bank transfer and validating your transaction ID here.</p>
                     
-                    <div class="bank-details" style="background: linear-gradient(135deg, var(--primary-light), #040a16); border: 1px solid var(--accent);">
-                        <h4 style="color: var(--accent); margin-bottom: 1rem;">Payment Method</h4>
-                        <p style="display: flex; justify-content: space-between;">Bank: <span>Zenith Bank</span></p>
-                        <p style="display: flex; justify-content: space-between;">Account: <span>D-Maths Academy</span></p>
-                        <p style="display: flex; justify-content: space-between;">Number: <span style="font-weight: 800; color: var(--white);">1234567890</span></p>
-                    </div>
-
-                    <div style="margin-top: 2rem; padding: 1.5rem; background: var(--glass); border-radius: 15px;">
-                        <p style="color: var(--text-muted); font-size: 0.9rem;"><i class="fas fa-info-circle" style="color: var(--accent);"></i> Use your full name as transfer description for faster automated verification.</p>
+                    <div class="bank-details">
+                        <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Zenith Bank PLC</h4>
+                        <p style="font-size: 1.2rem; font-weight: 700; letter-spacing: 1px;">1234567890</p>
+                        <p style="color: var(--text-muted);">Account Name: D-Maths Academy</p>
                     </div>
                 </div>
 
-                <form id="googleSheetForm" class="payment-form reveal">
+                <form id="googleSheetForm" class="card reveal">
                     <div class="form-group"><input type="text" name="name" placeholder="Full Student Name" required></div>
-                    <div class="form-group" style="margin: 1.5rem 0;"><input type="email" name="email" placeholder="Verification Email" required></div>
+                    <div class="form-group"><input type="email" name="email" placeholder="Verification Email" required></div>
                     <div class="form-group">
                         <select name="program" required>
-                            <option value="">Choose Course Path</option>
+                            <option value="">Select Course</option>
                             <option value="WAEC">WAEC/NECO (N70,000)</option>
                             <option value="IGCSE">IGCSE (N90,000)</option>
                             <option value="JAMB">JAMB (N60,000)</option>
                         </select>
                     </div>
-                    <div class="form-group" style="margin: 1.5rem 0;"><input type="text" name="paymentID" placeholder="Transaction Reference" required></div>
+                    <div class="form-group"><input type="text" name="paymentID" placeholder="Transaction Reference" required></div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">Verify Enrollment</button>
-                    <p id="formStatus" style="margin-top: 1rem; text-align: center;"></p>
+                    <p id="formStatus" style="margin-top: 1rem; text-align: center; font-size: 0.9rem;"></p>
                 </form>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section-padding">
-        <div class="container">
-            <div class="payment-grid">
-                <div class="reveal">
-                    <span class="subtitle">Contact</span>
-                    <h2>Get In Touch</h2>
-                    <div style="margin-top: 2rem; display: grid; gap: 2rem;">
-                        <div style="display: flex; gap: 1rem;">
-                            <i class="fas fa-phone" style="color: var(--accent);"></i>
-                            <span>+234 702 567 4894</span>
-                        </div>
-                        <div style="display: flex; gap: 1rem;">
-                            <i class="fas fa-envelope" style="color: var(--accent);"></i>
-                            <span>dmathstuition@gmail.com</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="reveal card" style="height: 300px; display: flex; align-items: center; justify-content: center;">
-                    <p style="color: var(--text-muted);">Asaba, Delta State Campus</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer style="padding: 5rem 0; background: var(--primary); border-top: 1px solid var(--glass-border); text-align: center;">
-        <p style="color: var(--text-muted);">&copy; 2026 D-Maths Academy. Building the logical future.</p>
+    <footer style="padding: 4rem 0; border-top: 1px solid var(--glass-border); text-align: center;">
+        <p style="color: var(--text-muted);">&copy; 2026 D-Maths Academy. Asaba, Delta State.</p>
     </footer>
 
     <button id="backToTop"><i class="fas fa-chevron-up"></i></button>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- UPDATED TOGGLE BAR FUNCTION ---
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('navLinks');
-            const navItems = document.querySelectorAll('.nav-links a');
-
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
-
-            // Close menu when link is clicked
-            navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    hamburger.classList.remove('active');
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // --- REMAINING LOGIC UNTOUCHED ---
-            const navbar = document.querySelector('.navbar');
-            const backToTop = document.getElementById('backToTop');
-
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                    backToTop.style.display = 'block';
-                } else {
-                    navbar.classList.remove('scrolled');
-                    backToTop.style.display = 'none';
-                }
-            });
-
-            backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
+            // Scroll Reveal
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add('active');
                 });
-            }, { threshold: 0.15 });
+            }, { threshold: 0.1 });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            const counters = document.querySelectorAll('.counter');
-            const counterObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = +entry.target.getAttribute('data-target');
-                        let count = 0;
-                        const updateCount = () => {
-                            const speed = target / 50;
-                            if (count < target) {
-                                count += speed;
-                                entry.target.innerText = Math.ceil(count);
-                                setTimeout(updateCount, 30);
-                            } else { entry.target.innerText = target; }
-                        };
-                        updateCount();
-                        counterObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 1 });
-            counters.forEach(c => counterObserver.observe(c));
+            // Back to Top
+            const btt = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                btt.style.display = window.scrollY > 400 ? 'block' : 'none';
+            });
+            btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-            // Google Sheets Integration
+            // Form Logic (Placeholder for your Apps Script URL)
             const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; 
             const form = document.getElementById('googleSheetForm');
             const status = document.getElementById('formStatus');
@@ -389,29 +286,23 @@
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 status.innerText = "Processing secure verification...";
-                status.style.color = "var(--accent)";
-                const submitBtn = form.querySelector('button');
-                submitBtn.disabled = true;
-
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData.entries());
 
                 fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    cache: 'no-cache',
                     body: JSON.stringify(data)
                 })
                 .then(() => {
-                    status.innerText = "Success! Data logged. Check your email.";
+                    status.innerText = "Success! Verification logged. Check email soon.";
                     status.style.color = "#4ade80";
                     form.reset();
                 })
                 .catch(() => {
-                    status.innerText = "Error. Please try again.";
+                    status.innerText = "Verification error. Please try again.";
                     status.style.color = "#ef4444";
-                })
-                .finally(() => { submitBtn.disabled = false; });
+                });
             });
         });
     </script>
