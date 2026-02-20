@@ -234,3 +234,53 @@ th { background: var(--primary); color: var(--white); }
     opacity: 1;
     transform: translateY(0);
 }
+
+/* --- Payment Section Styling --- */
+.payment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.bank-details {
+    background: var(--primary);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    border-left: 5px solid var(--accent);
+}
+
+.bank-details p { margin-bottom: 0.5rem; font-size: 1.1rem; }
+
+.payment-notice {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.payment-form {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.form-group { margin-bottom: 1.2rem; }
+
+.payment-form input, .payment-form select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.w-100 { width: 100%; }
+
+@media (max-width: 768px) {
+    .payment-grid { grid-template-columns: 1fr; }
+}
