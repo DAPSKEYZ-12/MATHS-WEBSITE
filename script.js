@@ -1,35 +1,46 @@
-// Replace with your Google Web App URL after deploying the Apps Script below
-const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', e => {
-        e.preventDefault();
-        
-        // Show loading state
-        const submitBtn = contactForm.querySelector('button');
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = "Sending...";
-        submitBtn.disabled = true;
-
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData.entries());
-
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Essential for Google Apps Script
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            alert('Thank you! Your application has been received. Check your email for confirmation.');
-            contactForm.reset();
-        })
-        .catch(error => console.error('Error!', error.message))
-        .finally(() => {
-            submitBtn.innerText = originalText;
-            submitBtn.disabled = false;
-        });
+document.addEventListener('DOMContentLoaded', () => {
+    // --- PREVIOUS LOGIC (Scroll, Counters, etc.) ---
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
     });
-}
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // --- GOOGLE SHEETS & EMAIL AUTOMATION ---
+    const SCRIPT_URL = 'YOUR_DEPLOYED_GOOGLE_APP_SCRIPT_URL'; // Paste your URL here
+    const paymentForm = document.getElementById('paymentForm');
+
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = paymentForm.querySelector('button');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const formData = new FormData(paymentForm);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', 
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                alert('Success! Your payment details have been submitted. A confirmation email is being sent to ' + data.email);
+                paymentForm.reset();
+            })
+            .catch(error => alert('Error submitting payment: ' + error.message))
+            .finally(() => {
+                btn.innerText = "Verify Payment";
+                btn.disabled = false;
+            });
+        });
+    }
+});
